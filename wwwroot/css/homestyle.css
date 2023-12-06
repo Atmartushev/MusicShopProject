@@ -1,0 +1,21 @@
+﻿body {
+    margin: 0;
+    padding: 0;
+    overflow: hidden; /* Prevent scrollbars due to full-width image */
+}
+
+.border-image {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    z-index: -1; /* Place the image behind the content */
+    background: url('@Url.Content("~/Images/pngtree-hand-draw-guitar-png-image_4422984.png")') repeat;
+}
+
+.content-container {
+    position: relative;
+    z-index: 1; /* Place the content above the image */
+    padding: 20px; /* Adjust the padding as needed */
+}

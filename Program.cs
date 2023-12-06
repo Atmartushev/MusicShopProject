@@ -1,5 +1,4 @@
 ﻿using Microsoft.EntityFrameworkCore;
-using Microsoft.Extensions.DependencyInjection;
 using MusicShopProject.Data;
 var builder = WebApplication.CreateBuilder(args);
 builder.Services.AddDbContext<MusicShopProjectContext>(options =>
@@ -26,7 +25,13 @@ app.UseRouting();
 app.UseAuthorization();
 
 app.MapControllerRoute(
+    name: "adminPage",
+    pattern: "AdminPage",
+    defaults: new { controller = "Songs", action = "Index" });
+
+app.MapControllerRoute(
     name: "default",
     pattern: "{controller=Home}/{action=Index}/{id?}");
+
 
 app.Run();
