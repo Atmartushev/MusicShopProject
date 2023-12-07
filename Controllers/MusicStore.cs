@@ -20,49 +20,31 @@ namespace MusicShopProject.Controllers
         }
 
         // GET: MusicStore
-        public async Task<IActionResult> Index()
+        public async Task<IActionResult> Index(string searchName, string searchArtist, string searchGenre)
         {
-            return View(await _context.Songs.ToListAsync());
-        }
+            var query = _context.Songs.AsQueryable();
 
-        // GET: MusicStore/Details/5
-        public async Task<IActionResult> Details(int? id)
-        {
-            if (id == null)
+            // Apply filters based on the search criteria
+            if (!string.IsNullOrEmpty(searchName))
             {
-                return NotFound();
+                query = query.Where(s => s.Name.Contains(searchName));
             }
 
-            var songs = await _context.Songs
-                .FirstOrDefaultAsync(m => m.SongsID == id);
-            if (songs == null)
+            if (!string.IsNullOrEmpty(searchArtist))
             {
-                return NotFound();
+                query = query.Where(s => s.Artist.Contains(searchArtist));
             }
 
-            return View(songs);
-        }
-
-        // GET: MusicStore/Create
-        public IActionResult Create()
-        {
-            return View();
-        }
-
-        // POST: MusicStore/Create
-        // To protect from overposting attacks, enable the specific properties you want to bind to.
-        // For more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
-        [HttpPost]
-        [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Create([Bind("SongsID,Name,Artist,Genre,Date_Added,Song_Length,Download_Size,Price")] Songs songs)
-        {
-            if (ModelState.IsValid)
+            if (!string.IsNullOrEmpty(searchGenre))
             {
-                _context.Add(songs);
-                await _context.SaveChangesAsync();
-                return RedirectToAction(nameof(Index));
+                query = query.Where(s => s.Genre.Contains(searchGenre));
             }
-            return View(songs);
+
+            var filteredSongs = await query.ToListAsync();
+
+            return View(filteredSongs);
         }
+
+
     }
 }
