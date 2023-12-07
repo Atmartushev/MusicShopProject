@@ -9,13 +9,32 @@
 <p>
     
 </p>
-<form asp-controller="Songs" asp-action="Index">
-    <p>
-        Name: <input type="text" name="SearchName" />
-        Artist: <input type="text" name="SearchArtist" />
-        Genre: <input type="text" name="SearchGenre" />
+<form asp-controller="Songs" asp-action="Index" class="search-form">
+    <div class="form-group">
+        <label for="SearchName">Name:</label>
+        <input type="text" id="SearchName" name="SearchName" />
+    </div>
+    <div class="form-group">
+        <label for="SearchArtist">Artist:</label>
+        <select id="SearchArtist" name="SearchArtist">
+            <option value="">-- Select Artist --</option>
+            @foreach (var artist in Model.Select(x => x.Artist).Distinct())
+            {
+                <option value="@artist">@artist</option>
+            }
+        </select>
+    </div>
+    <div class="form-group">
+        <label for="SearchGenre">Genre:</label>
+        <select id="SearchGenre" name="SearchGenre">
+            <option value="">-- Select Genre --</option>
+            @foreach (var genre in Model.Select(x => x.Genre).Distinct())
+            {
+                <option value="@genre">@genre</option>
+            }
+        </select>
         <input type="submit" value="Filter" />
-    </p>
+    </div>
 </form>
 <table class="table">
     <thead>
