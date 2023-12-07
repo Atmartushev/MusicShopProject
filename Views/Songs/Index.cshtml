@@ -4,18 +4,42 @@
     ViewData["Title"] = "Index";
 }
 
-<h1>Index</h1>
+<head>
+    <link rel="stylesheet" href="~/css/AdminStyle.css" />
+</head>
+
+<h1>Song List</h1>
 
 <p>
     <a asp-action="Create">Create New</a>
 </p>
-<form asp-controller="Songs" asp-action="Index">
-    <p>
-        Name: <input type="text" name="SearchName" />
-        Artist: <input type="text" name="SearchArtist" />
-        Genre: <input type="text" name="SearchGenre" />
+
+<form asp-controller="Songs" asp-action="Index" class="search-form">
+    <div class="form-group">
+        <label for="SearchName">Name:</label>
+        <input type="text" id="SearchName" name="SearchName" />
+    </div>
+    <div class="form-group">
+        <label for="SearchArtist">Artist:</label>
+        <select id="SearchArtist" name="SearchArtist">
+            <option value="">-- Select Artist --</option>
+            @foreach (var artist in Model.Select(x => x.Artist).Distinct())
+            {
+                <option value="@artist">@artist</option>
+            }
+        </select>
+    </div>
+    <div class="form-group">
+        <label for="SearchGenre">Genre:</label>
+        <select id="SearchGenre" name="SearchGenre">
+            <option value="">-- Select Genre --</option>
+            @foreach (var genre in Model.Select(x => x.Genre).Distinct())
+            {
+                <option value="@genre">@genre</option>
+            }
+        </select>
         <input type="submit" value="Filter" />
-    </p>
+    </div>
 </form>
 
 <table class="table">
@@ -31,13 +55,13 @@
                 @Html.DisplayNameFor(model => model.Genre)
             </th>
             <th>
-                @Html.DisplayNameFor(model => model.Date_Added)
+                Date Added
             </th>
             <th>
-                @Html.DisplayNameFor(model => model.Song_Length)
+                Song Length
             </th>
             <th>
-                @Html.DisplayNameFor(model => model.Download_Size)
+                Download Size
             </th>
             <th>
                 @Html.DisplayNameFor(model => model.Price)
