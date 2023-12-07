@@ -6,70 +6,52 @@
 
 <h1>Index</h1>
 
-<p>
-    
-</p>
-<form asp-controller="Songs" asp-action="Index">
+<p></p>
+<form asp-controller="MusicStore" asp-action="Index" method="get">
     <p>
-        Name: <input type="text" name="SearchName" />
-        Artist: <input type="text" name="SearchArtist" />
-        Genre: <input type="text" name="SearchGenre" />
+        Name: <input type="text" name="searchName" />
+        Artist: <input type="text" name="searchArtist" />
+        Genre: <input type="text" name="searchGenre" />
         <input type="submit" value="Filter" />
     </p>
 </form>
-<table class="table">
-    <thead>
-        <tr>
-            <th>
-                @Html.DisplayNameFor(model => model.Name)
-            </th>
-            <th>
-                @Html.DisplayNameFor(model => model.Artist)
-            </th>
-            <th>
-                @Html.DisplayNameFor(model => model.Genre)
-            </th>
-            <th>
-                @Html.DisplayNameFor(model => model.Date_Added)
-            </th>
-            <th>
-                @Html.DisplayNameFor(model => model.Song_Length)
-            </th>
-            <th>
-                @Html.DisplayNameFor(model => model.Download_Size)
-            </th>
-            <th>
-                @Html.DisplayNameFor(model => model.Price)
-            </th>
-            <th></th>
-        </tr>
-    </thead>
-    <tbody>
-@foreach (var item in Model) {
-        <tr>
-            <td>
-                @Html.DisplayFor(modelItem => item.Name)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.Artist)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.Genre)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.Date_Added)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.Song_Length)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.Download_Size)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.Price)
-            </td>
-          
-        </tr>
-}
-    </tbody>
-</table>
+
+<form asp-controller="Songs" asp-action="ProcessSelection" method="post">
+    <table class="table">
+        <thead>
+            <tr>
+                <th>@Html.DisplayNameFor(model => model.Name)</th>
+                <th>@Html.DisplayNameFor(model => model.Artist)</th>
+                <th>@Html.DisplayNameFor(model => model.Genre)</th>
+                <th>@Html.DisplayNameFor(model => model.Date_Added)</th>
+                <th>@Html.DisplayNameFor(model => model.Song_Length)</th>
+                <th>@Html.DisplayNameFor(model => model.Download_Size)</th>
+                <th>@Html.DisplayNameFor(model => model.Price)</th>
+                <th>Actions</th>
+            </tr>
+        </thead>
+        <tbody>
+            @foreach (var item in Model)
+            {
+                <tr>
+                    <td>@Html.DisplayFor(modelItem => item.Name)</td>
+                    <td>@Html.DisplayFor(modelItem => item.Artist)</td>
+                    <td>@Html.DisplayFor(modelItem => item.Genre)</td>
+                    <td>@Html.DisplayFor(modelItem => item.Date_Added)</td>
+                    <td>@Html.DisplayFor(modelItem => item.Song_Length)</td>
+                    <td>@Html.DisplayFor(modelItem => item.Download_Size)</td>
+                    <td>@Html.DisplayFor(modelItem => item.Price)</td>
+                    <td>
+                        <input type="checkbox" name="selectedSongs" value="@item.SongsID" />
+                        @* <!-- Add buttons for delete, edit, and display actions -->
+                        <a asp-controller="Songs" asp-action="Delete" asp-route-id="@item.SongsID">Delete</a>
+                        <a asp-controller="Songs" asp-action="Edit" asp-route-id="@item.SongsID">Edit</a>
+                        <a asp-controller="Songs" asp-action="Details" asp-route-id="@item.SongsID">Details</a> *@
+                    </td>
+                </tr>
+            }
+        </tbody>
+    </table>
+
+    <button type="submit">Add to shopping cart</button>
+</form>
